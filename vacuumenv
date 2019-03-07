@@ -1,0 +1,95 @@
+#Rachel Woodard 
+#Enviorment 
+
+import numpy as np
+
+class vacuumenv(object):
+    def __init__(self, size, dirty):
+        self.size = size
+        self.dirty = dirty
+
+        self.agentx = np.random.randint(self.size[0])
+        self.agenty = np.random.randint(self.size[1])
+        self.position = np.random.randint(4)
+
+
+        self.area = np.zeros((2,self.size[0],self.size[1]))
+
+
+        for row in range(self.size[0]):
+             for col in range(self.size[1]):
+                if np.random.uniform() < self.dirty:
+                    self.position[0][row][col] = 1
+
+        base_x = np.random.randint(self.size[0])
+        base_y = np.randomint(self.size[1])
+        self.area[1][base_x][base_y]=1
+
+    def state(self, block=False):
+        return{"something is blocking the path" : int(block),
+                "dirt": self.area[0][self.agentx][self.agenty],
+                "return to original position": self.area[1][self.agentx][self.agenty],
+                "agent": (self.agentx, self.agenty)}
+
+
+
+    def run_into_blockage(self):
+        if  (self.position == 0 and self.agentx == 0) or \
+            (self.position == 1 and self.agenty== self.size[1]-1) or \
+            (self.position == 2 and self.agentx == self.size[0] - 1) or \
+            (self.position == 3 and self.agenty == 0):
+            return True
+
+
+
+        return False
+
+    def go_forward(self):
+
+        if self.run_into_blockage():
+            return True
+
+        if self.position==0:
+            self.agentx -=1
+
+        elif self.position == 1:
+            self.agenty += 1
+
+        elif self.position == 2:
+            self.agentx += 1
+
+        elif self.position == 3:
+            self.agenty -= 1
+
+        return False
+
+    def move(self,action):
+        block= False
+        gift = -1
+        finish = False
+
+        if action == 0:
+            block = self.go_forward()
+
+        elif action == 1:
+            self.position = (self.positon +1) % 4
+
+        elif action == 2:
+            self.position = (self.position -1) % 4
+
+        elif action == 3:
+            if self.area[0][self.agentx][agenty] ==1:
+                gift +=100
+                self.area[0][self.agentx][self.agenty] = 0
+
+        elif action == 4:
+            if self.area[1][self.agentx][self.agenty] != 1:
+                gift -=1000
+
+            finish = True
+
+        return False
+
+
+
+        return self.state(block), gift, finish
