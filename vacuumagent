@@ -1,0 +1,41 @@
+#Rachel Woodard 
+#agents 
+
+import numpy as np
+
+ACTIONS=(   (0, "Move Forward"),
+            (2, "Left"),
+            (3,"Clean Dirt"),
+            (4, "Off"))
+
+
+class RandomAgent(object):
+    def __init__(self):
+        self.gift = 0
+
+    def act(self,view,finish):
+        self.gift += gift
+
+
+        action = ACTIONS[np.random.randint(len(ACTIONS))]
+        return action
+
+
+
+class ReflexAgent(object):
+    def __init__(self):
+        self.gift = 0
+
+    def act(self,view,gift):
+        self.gift += gift
+
+        if view['mess'] == 1:
+            return ACTIONS[3]
+
+        if view['home'] == 1:
+            return ACTIONS[4]
+
+        if view['obstacle'] == 1:
+            return ACTIONS[1]
+
+        return ACTIONS[np.random.randint(3)]
