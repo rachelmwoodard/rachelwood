@@ -1,0 +1,70 @@
+#Rachel Woodard 
+#NQueen 
+#Pycharm 
+
+class NQ:
+
+    def __init__(self, size):
+        # Store the board size and the number of  solutions
+        self.area = area
+        self.answer = 0
+        self.solve()
+
+    def solve(self):
+#solve and print solutions
+        area = [-1] * self.answer
+        self.place_queen(area, 0)
+        print("Number of", self.area, "solutions.")
+
+    def place_queen(self, placement, target_row):
+
+        # stop program if no more room in rows
+        if target_row == self.area:
+            self.full_board(placement)
+            self.half_board(placement)
+            self.answer += 1
+        else:
+            # try and place a queen
+            for column in range(self.area):
+                # do not accept a position that does not work
+                if self.check(placement, target_row, column):
+                    placement[target_row] = column
+                    self.place_queen(placement, target_row + 1)
+
+
+    def check(self, placement, used, column):
+
+        #see if any queens are being competed with other queens
+        for i in range(used):
+            if placement[i] == column or \
+                placement[i] - i == column - used or \
+                placement[i] + i == column + used:
+
+                return False
+        return True
+
+    def full_board(self, placement):
+#show the entire board
+        for row in range(self.area):
+            line = ""
+            for column in range(self.area):
+                if placement[row] == column:
+                    line += "Q "
+                else:
+                    line += ". "
+            print(line)
+        print("\n")
+
+    def half_board(self, placement):
+       #show queen position on board
+        line = ""
+        for i in range(self.area):
+            line += str(placement[i]) + " "
+        print(line)
+
+def main():
+    #initialize and place
+    NQueens(8)
+
+if __name__ == "__main__":
+    mainloop()
