@@ -1,0 +1,43 @@
+#Rachel Woodard 
+#Main 
+# Pycharm 
+from vacenv import vacuumenv
+from agents import r_agent, ReflexAgent
+
+ENV_SIZE = (12, 12)
+
+
+
+def main():
+    env = vacuumenv(ENV_SIZE, 0.05)
+    agent = ReflexAgent()
+
+
+    print env.area[0]
+    print env.area[1]
+
+
+    view = env.state()
+    gift = 0
+    finish = False
+    action =agent.act(view, gift)
+
+    print view
+    turn = 1
+
+    while not finish:
+        view,gift,finish = env.step(action[0])
+
+        print finish
+        print "Gift {0} Total Reward{1}".format(turn, action[1])
+        turn += 1
+
+
+        if turn >1000:
+            break
+
+    print env.area[0]
+
+if __name__ == "__main__":
+    main()
+
